@@ -1,6 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://n8gyk568ch6u"]
+[gd_scene load_steps=12 format=3 uid="uid://n8gyk568ch6u"]
 
 [ext_resource type="Script" uid="uid://dyiownjjn0pjf" path="res://Scenes/Main/main.gd" id="1_p8rbg"]
+[ext_resource type="Texture2D" uid="uid://bealr7w0xe6ft" path="res://background.jpg" id="3_cmk6n"]
+[ext_resource type="Texture2D" uid="uid://c7ktw4pj2feqp" path="res://Scenes/wave.png" id="3_i3fi7"]
+[ext_resource type="FontFile" uid="uid://drutrw00ig52a" path="res://Assets/Fonts/SSFBreakthrough-Bold.ttf" id="4_i3fi7"]
+[ext_resource type="Script" uid="uid://blg3h7jsdblro" path="res://Scenes/Main/button_settings.gd" id="5_o8wgc"]
+[ext_resource type="Script" uid="uid://dn4j8018dndof" path="res://Scenes/Main/time.gd" id="6_5s61s"]
+[ext_resource type="FontFile" uid="uid://dv71qjlyofcx8" path="res://Assets/Fonts/SSFBreakthrough-Black.ttf" id="6_w20t6"]
+[ext_resource type="Script" uid="uid://bqv74him7whhc" path="res://Scenes/Main/script_assets/wave.gd" id="8_5s61s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtv3y"]
+bg_color = Color(0.080783345, 0.080783345, 0.080783345, 0.61960787)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_cmk6n"]
+font = ExtResource("4_i3fi7")
+font_size = 20
+stacked_outline_count = 1
+stacked_shadow_count = 1
+stacked_outline_0/size = 5
+stacked_shadow_0/offset = Vector2(0, 0)
+stacked_shadow_0/color = Color(0, 0, 0, 0.23529412)
+stacked_shadow_0/outline_size = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3fi7"]
+bg_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+border_color = Color(0.37254903, 0.17254902, 1, 1)
+expand_margin_left = 15.0
+expand_margin_right = 15.0
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -11,12 +39,159 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p8rbg")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
+[node name="background" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.78431374)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.015686275, 0.015686275, 0.015686275, 1)
+scale = Vector2(0.8, 0.8)
+pivot_offset = Vector2(640, 360)
+texture = ExtResource("3_cmk6n")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="bottombar" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qtv3y")
+
+[node name="Right" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_top = 640.0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 0
+theme_override_constants/margin_left = 1100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Right"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_constants/separation = 24
+
+[node name="time" type="Label" parent="Right/HBoxContainer"]
+visibility_layer = 1023
+layout_mode = 2
+text = "00:00:00"
+label_settings = SubResource("LabelSettings_cmk6n")
+script = ExtResource("6_5s61s")
+
+[node name="Control" type="Control" parent="Right/HBoxContainer"]
+layout_mode = 2
+
+[node name="Tools" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_top = 640.0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 0
+theme_override_constants/margin_left = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tools"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="Play" type="Button" parent="Tools/HBoxContainer"]
+clip_children = 2
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("6_w20t6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_i3fi7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_i3fi7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i3fi7")
+text = "Wave"
+script = ExtResource("5_o8wgc")
+
+[node name="ColorRect" type="ColorRect" parent="Tools/HBoxContainer/Play"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_right = 23.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.6014544, 0.00026500793, 0.60145015, 1)
+
+[node name="Label" type="Label" parent="Tools/HBoxContainer/Play"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_w20t6")
+text = "Wave"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="Button" parent="Tools/HBoxContainer"]
+clip_children = 2
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("6_w20t6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_i3fi7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_i3fi7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i3fi7")
+text = "Настройки"
+script = ExtResource("5_o8wgc")
+
+[node name="ColorRect" type="ColorRect" parent="Tools/HBoxContainer/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_right = 23.0
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.6014544, 0.00026500793, 0.60145015, 1)
+
+[node name="Label" type="Label" parent="Tools/HBoxContainer/Settings"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_w20t6")
+text = "Настройки"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WaveLogo" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 17.0
+offset_right = 122.0
+offset_bottom = 106.0
+mouse_default_cursor_shape = 2
+texture = ExtResource("3_i3fi7")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("8_5s61s")
+
+[connection signal="mouse_entered" from="Right/HBoxContainer/time" to="Right/HBoxContainer/time" method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Tools/HBoxContainer/Play" to="Tools/HBoxContainer/Play" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Tools/HBoxContainer/Play" to="Tools/HBoxContainer/Play" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Tools/HBoxContainer/Settings" to="Tools/HBoxContainer/Settings" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Tools/HBoxContainer/Settings" to="Tools/HBoxContainer/Settings" method="_on_mouse_exited"]
+[connection signal="gui_input" from="WaveLogo" to="WaveLogo" method="_on_gui_input"]
+[connection signal="mouse_entered" from="WaveLogo" to="WaveLogo" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="WaveLogo" to="WaveLogo" method="_on_mouse_exited"]

@@ -8,6 +8,9 @@ const PATH = "user://config.json"
 func _ready() -> void:
 	http.request("http://127.0.0.6:8000/ping")
 	print_debug("bootstrap activated!")
+	var cursor = Image.load_from_file("res://cursor.png")
+	cursor.resize(36, 36)
+	Input.set_custom_mouse_cursor(ImageTexture.create_from_image(cursor))
 	pulse()
 	load_config()
 

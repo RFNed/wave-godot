@@ -1,16 +1,22 @@
 extends Control
 
-@onready var showGradient = $ColorRect
+@onready var clock = $Right/HBoxContainer/time
+@onready var background = $background
+var target_pos := Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_on_wake_up()
+	pass
 
-func _on_wake_up() -> void:
-	var tween = create_tween()
-	tween.tween_property(showGradient, "modulate:a", 0.0, 1.5)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	var mouse = get_viewport().get_mouse_position()
+	var center = Vector2(get_viewport().size) * 0.5
+
+	target_pos = (mouse - center) * -0.02
+
+	background.position = background.position.lerp(target_pos, 100.0 * delta)
+
+	clock.text = Time.get_time_string_from_system()
