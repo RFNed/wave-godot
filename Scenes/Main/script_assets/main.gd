@@ -1,12 +1,13 @@
 extends Control
 
-@onready var clock = $Right/HBoxContainer/time
+@onready var clock = $Label
 @onready var background = $background
 var target_pos := Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	await get_tree().create_timer(3.0).timeout
+	GlobalUi.add_notify("123")
 
 
 
@@ -18,5 +19,3 @@ func _process(delta: float) -> void:
 	target_pos = (mouse - center) * -0.02
 
 	background.position = background.position.lerp(target_pos, 100.0 * delta)
-
-	clock.text = Time.get_time_string_from_system()

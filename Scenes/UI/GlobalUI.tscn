@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxan2ebxqcw6r"]
+
+[ext_resource type="Script" uid="uid://6xojl06q4yks" path="res://Scenes/UI/global_ui.gd" id="1_i5qf0"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_i5qf0")
+
+[node name="NotifyManager" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.81200004
+anchor_right = 1.0
+anchor_bottom = 0.99700004
+offset_left = -0.36010742
+offset_bottom = 0.15997314
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 20
+alignment = 2
