@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxan2ebxqcw6r"]
+[gd_scene format=3 uid="uid://dxan2ebxqcw6r"]
 
 [ext_resource type="Script" uid="uid://6xojl06q4yks" path="res://Scenes/UI/global_ui.gd" id="1_i5qf0"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=2038263764]
 script = ExtResource("1_i5qf0")
 
-[node name="NotifyManager" type="VBoxContainer" parent="."]
+[node name="NotifyManager" type="VBoxContainer" parent="." unique_id=655763208]
 anchors_preset = -1
 anchor_left = 0.81200004
 anchor_right = 1.0
