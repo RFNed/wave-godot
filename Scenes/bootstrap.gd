@@ -6,7 +6,7 @@ extends Control
 
 func _ready() -> void:
 	Config.load_config()
-	http.request("http://127.0.0.6:8000/ping")
+	http.request("%s/ping" % Config.HOST_SERVER)
 	print_debug("bootstrap activated!")
 	var cursor = Image.load_from_file("res://cursor.png")
 	cursor.resize(32, 32)

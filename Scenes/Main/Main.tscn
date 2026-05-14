@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://n8gyk568ch6u"]
 
 [ext_resource type="Script" uid="uid://dyiownjjn0pjf" path="res://Scenes/Main/script_assets/main.gd" id="1_p8rbg"]
+[ext_resource type="Script" uid="uid://l5616hva4kgk" path="res://Scenes/Main/autoVideoBackgroundMain.gd" id="3_5s61s"]
 [ext_resource type="Texture2D" uid="uid://bealr7w0xe6ft" path="res://background.jpg" id="3_cmk6n"]
 [ext_resource type="Script" uid="uid://wac342ok4b2t" path="res://Scenes/Main/script_assets/hoverEffectButton.gd" id="3_i3fi7"]
 [ext_resource type="FontFile" uid="uid://drutrw00ig52a" path="res://Assets/Fonts/SSFBreakthrough-Bold.ttf" id="3_o8wgc"]
 [ext_resource type="Script" uid="uid://02oo8cqivvrg" path="res://Scenes/Main/script_assets/clock.gd" id="4_o8wgc"]
 [ext_resource type="Shader" uid="uid://b3ndrwqcsdxfm" path="res://Assets/Avatar.gdshader" id="6_aw1lf"]
 [ext_resource type="Script" uid="uid://bndghxw26tdei" path="res://Scenes/Main/script_assets/auth_container.gd" id="6_w20t6"]
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_aw1lf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmk6n"]
 bg_color = Color(0, 0, 0, 0.6666667)
@@ -53,12 +56,27 @@ texture = ExtResource("3_cmk6n")
 expand_mode = 1
 stretch_mode = 3
 
+[node name="background_video" type="VideoStreamPlayer" parent="." unique_id=772410381]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(640, 360)
+mouse_filter = 1
+stream = SubResource("VideoStreamTheora_aw1lf")
+expand = true
+script = ExtResource("3_5s61s")
+
 [node name="TopBar" type="PanelContainer" parent="." unique_id=851573667]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 82.0
 grow_horizontal = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_cmk6n")
 
 [node name="clockMargin" type="MarginContainer" parent="TopBar" unique_id=1710190822]
@@ -73,7 +91,7 @@ theme_override_constants/separation = 10
 
 [node name="date" type="Label" parent="TopBar/clockMargin/VBoxContainer" unique_id=522862838]
 layout_mode = 2
-text = "27/12/2019"
+text = "00-00-0000"
 
 [node name="clock" type="Label" parent="TopBar/clockMargin/VBoxContainer" unique_id=738362359]
 layout_mode = 2
@@ -91,6 +109,7 @@ offset_top = -0.16003418
 offset_right = 94.47998
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_qtv3y")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BottomBar" unique_id=1167408512]
@@ -137,22 +156,27 @@ text = "Войти"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Avatar" type="TextureRect" parent="BottomBar/HBoxContainer/MarginContainer" unique_id=91631360]
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomBar/HBoxContainer/MarginContainer" unique_id=1900967037]
 visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Avatar" type="TextureRect" parent="BottomBar/HBoxContainer/MarginContainer/HBoxContainer" unique_id=91631360]
+modulate = Color(1, 1, 1, 0)
 material = SubResource("ShaderMaterial_5s61s")
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
 expand_mode = 2
 
-[node name="me" type="HTTPRequest" parent="BottomBar/HBoxContainer/MarginContainer/Avatar" unique_id=1644684505]
+[node name="me" type="HTTPRequest" parent="BottomBar/HBoxContainer/MarginContainer/HBoxContainer/Avatar" unique_id=1644684505]
 
-[node name="profile" type="HTTPRequest" parent="BottomBar/HBoxContainer/MarginContainer/Avatar" unique_id=1944577990]
+[node name="profile" type="HTTPRequest" parent="BottomBar/HBoxContainer/MarginContainer/HBoxContainer/Avatar" unique_id=1944577990]
 
-[node name="image" type="HTTPRequest" parent="BottomBar/HBoxContainer/MarginContainer/Avatar" unique_id=945442368]
+[node name="image" type="HTTPRequest" parent="BottomBar/HBoxContainer/MarginContainer/HBoxContainer/Avatar" unique_id=945442368]
 
-[node name="Nick" type="Label" parent="BottomBar/HBoxContainer/MarginContainer" unique_id=1222024091]
-visible = false
+[node name="Nick" type="Label" parent="BottomBar/HBoxContainer/MarginContainer/HBoxContainer" unique_id=1222024091]
 layout_mode = 2
 text = "TEMA LAL 666"
 
@@ -232,13 +256,19 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Регистрация"
 
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=210007266]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="finished" from="background_video" to="background_video" method="_on_finished"]
 [connection signal="mouse_entered" from="BottomBar/HBoxContainer/MarginContainer/Login" to="BottomBar/HBoxContainer/MarginContainer/Login" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="BottomBar/HBoxContainer/MarginContainer/Login" to="BottomBar/HBoxContainer/MarginContainer/Login" method="_on_mouse_exited"]
 [connection signal="pressed" from="BottomBar/HBoxContainer/MarginContainer/Login" to="." method="_on_login_pressed"]
-[connection signal="gui_input" from="BottomBar/HBoxContainer/MarginContainer/Avatar" to="." method="_on_avatar_gui_input"]
-[connection signal="request_completed" from="BottomBar/HBoxContainer/MarginContainer/Avatar/me" to="." method="_on_me_request_completed"]
-[connection signal="request_completed" from="BottomBar/HBoxContainer/MarginContainer/Avatar/profile" to="." method="_on_profile_request_completed"]
-[connection signal="request_completed" from="BottomBar/HBoxContainer/MarginContainer/Avatar/image" to="." method="_on_image_request_completed"]
+[connection signal="gui_input" from="BottomBar/HBoxContainer/MarginContainer/HBoxContainer/Avatar" to="." method="_on_avatar_gui_input"]
+[connection signal="request_completed" from="BottomBar/HBoxContainer/MarginContainer/HBoxContainer/Avatar/me" to="." method="_on_me_request_completed"]
+[connection signal="request_completed" from="BottomBar/HBoxContainer/MarginContainer/HBoxContainer/Avatar/profile" to="." method="_on_profile_request_completed"]
+[connection signal="request_completed" from="BottomBar/HBoxContainer/MarginContainer/HBoxContainer/Avatar/image" to="." method="_on_image_request_completed"]
 [connection signal="pressed" from="AuthContainer/VBoxContainer/HBoxContainer/Login" to="AuthContainer" method="_on_login_pressed"]
 [connection signal="request_completed" from="AuthContainer/VBoxContainer/HBoxContainer/Login/RequestAuth" to="AuthContainer" method="_on_request_auth_request_completed"]
 [connection signal="pressed" from="AuthContainer/VBoxContainer/MarginContainer3/HBoxContainer/Register" to="AuthContainer" method="_on_register_pressed"]

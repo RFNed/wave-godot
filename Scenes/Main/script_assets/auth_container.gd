@@ -33,6 +33,6 @@ func _on_request_auth_request_completed(result: int, response_code: int, headers
 		GlobalUi.add_notify("Правильно")
 		Config.config.set_value("user", "session", str(data['session_id']))
 		Config.config.save(Config.USER_CONFIG)
-		get_tree().reload_current_scene()
+		get_parent().onLoginMain()
 	else:
 		GlobalUi.add_notify("Неверный логин/пароль")
